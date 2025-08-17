@@ -5,6 +5,12 @@ VisualStudioVersion = 17.14.36408.4 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProsperDaily", "ProsperDaily\ProsperDaily.csproj", "{EAA5B753-454C-43BB-8106-601E7640EDB8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProsperDaily.Shared", "ProsperDaily.Shared\ProsperDaily.Shared.csproj", "{64133169-7293-499A-A916-47F97BB8227D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProsperDaily.Data", "ProsperDaily.Data\ProsperDaily.Data.csproj", "{B3B72DE6-D0BC-4F19-8D94-EEFB26B84173}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProsperDaily.MigrationsRunner", "ProsperDaily.MigrationsRunner\ProsperDaily.MigrationsRunner.csproj", "{3E33A1D8-A79C-4837-98B3-1F2124EC05E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,8 +19,21 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{EAA5B753-454C-43BB-8106-601E7640EDB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EAA5B753-454C-43BB-8106-601E7640EDB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAA5B753-454C-43BB-8106-601E7640EDB8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{EAA5B753-454C-43BB-8106-601E7640EDB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAA5B753-454C-43BB-8106-601E7640EDB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64133169-7293-499A-A916-47F97BB8227D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64133169-7293-499A-A916-47F97BB8227D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64133169-7293-499A-A916-47F97BB8227D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64133169-7293-499A-A916-47F97BB8227D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3B72DE6-D0BC-4F19-8D94-EEFB26B84173}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3B72DE6-D0BC-4F19-8D94-EEFB26B84173}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3B72DE6-D0BC-4F19-8D94-EEFB26B84173}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3B72DE6-D0BC-4F19-8D94-EEFB26B84173}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E33A1D8-A79C-4837-98B3-1F2124EC05E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E33A1D8-A79C-4837-98B3-1F2124EC05E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E33A1D8-A79C-4837-98B3-1F2124EC05E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E33A1D8-A79C-4837-98B3-1F2124EC05E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
