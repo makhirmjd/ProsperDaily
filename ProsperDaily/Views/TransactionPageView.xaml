@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ProsperDaily.Views.TransactionPageView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="TransactionPageView">
+    <ContentPage.Resources>
+        <x:Decimal x:Key="TempAmount">49</x:Decimal>
+    </ContentPage.Resources>
+    <Grid RowDefinitions=".15*,.15*,.7*">
+        <RoundRectangle Grid.RowSpan="2" StyleClass="TopRectangle" />
+        <VerticalStackLayout StyleClass="Header">
+            <Label StyleClass="HeaderSubTitle" Text="Add Transaction" />
+        </VerticalStackLayout>
+        <Grid
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            StyleClass="BalancedGrid">
+            <RoundRectangle StyleClass="BalanceRectangle" />
+
+            <VerticalStackLayout Spacing="10" StyleClass="Padding25">
+                <Label Text="Transaction Name" />
+                <Border StyleClass="FrameBorder">
+                    <Entry Text="Netflix Subscription" />
+                </Border>
+                <Label StyleClass="MarginT15" Text="Amount" />
+                <Border StyleClass="FrameBorder">
+                    <Entry
+                        Keyboard="Numeric"
+                        Text="{Binding Source={StaticResource TempAmount}, StringFormat='{0:C}'}"
+                        VerticalOptions="Center" />
+                </Border>
+                <Label StyleClass="MarginT15" Text="Transaction Date" />
+                <Border StyleClass="FrameBorder">
+                    <DatePicker />
+                </Border>
+                <HorizontalStackLayout>
+                    <CheckBox IsChecked="True" />
+                    <Label Text="Is Income?" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <Button StyleClass="MarginT15" Text="Save" />
+                <Button StyleClass="MarginT15, RedControl" Text="Cancel" />
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>
