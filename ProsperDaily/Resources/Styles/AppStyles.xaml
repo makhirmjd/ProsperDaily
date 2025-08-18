@@ -59,6 +59,28 @@
         TargetType="Grid">
         <Setter Property="Padding" Value="25" />
     </Style>
+
+    <Style
+        ApplyToDerivedTypes="True"
+        Class="Padding25"
+        TargetType="VerticalStackLayout">
+        <Setter Property="Padding" Value="25" />
+    </Style>
+
+    <Style
+        ApplyToDerivedTypes="True"
+        Class="MarginT15"
+        TargetType="Label">
+        <Setter Property="Margin" Value="0,15,0,0" />
+    </Style>
+
+    <Style
+        ApplyToDerivedTypes="True"
+        Class="MarginT15"
+        TargetType="Button">
+        <Setter Property="Margin" Value="0,15,0,0" />
+    </Style>
+
     <Style
         ApplyToDerivedTypes="True"
         Class="Margin15"
@@ -111,5 +133,19 @@
         <Setter Property="HorizontalTextAlignment" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="TextColor" Value="Black" />
+    </Style>
+
+    <Style Class="FrameBorder" TargetType="Border">
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="Stroke" Value="{StaticResource SecondaryColor}" />
+        <Setter Property="Padding" Value="10,5" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+    </Style>
+
+    <Style
+        ApplyToDerivedTypes="True"
+        Class="RedControl"
+        TargetType="Button">
+        <Setter Property="BackgroundColor" Value="DarkRed" />
     </Style>
 </ResourceDictionary>

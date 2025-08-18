@@ -37,6 +37,7 @@ public static class MauiProgram
     private static void ConfigureServices(IServiceCollection services)
     {
         services.AddScoped<DashboardPageViewModel>();
+        services.AddScoped<TransactionPageViewModel>();
     }
 
     private static void ConfigureDatabaseService(IServiceCollection services)
