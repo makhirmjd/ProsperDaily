@@ -4,6 +4,8 @@ using Microsoft.Maui.Controls;
 using ProsperDaily.Data;
 using ProsperDaily.Services;
 using ProsperDaily.Shared.Services;
+using ProsperDaily.ViewModels;
+using System.Globalization;
 
 namespace ProsperDaily;
 
@@ -26,7 +28,7 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
-
+        ConfigureCulture();
         ConfigureServices(builder.Services);
 
         return builder.Build();
@@ -34,6 +36,7 @@ public static class MauiProgram
 
     private static void ConfigureServices(IServiceCollection services)
     {
+        services.AddScoped<DashboardPageViewModel>();
     }
 
     private static void ConfigureDatabaseService(IServiceCollection services)
@@ -43,5 +46,11 @@ public static class MauiProgram
         using AsyncServiceScope scope = services.BuildServiceProvider().CreateAsyncScope();
         ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         context.Database.Migrate();
+    }
+
+    private static void ConfigureCulture()
+    {
+        CultureInfo.DefaultThreadCurrentCulture = new("en-NG");
+        CultureInfo.DefaultThreadCurrentUICulture = new("en-NG");
     }
 }
