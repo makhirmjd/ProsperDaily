@@ -1,15 +1,21 @@
-﻿namespace ProsperDaily
+﻿using ProsperDaily.ViewModels;
+using ProsperDaily.Views;
+
+namespace ProsperDaily
 {
     public partial class App : Application
     {
-        public App()
+        private readonly DashboardPageViewModel dashboardPageViewModel;
+
+        public App(DashboardPageViewModel dashboardPageViewModel)
         {
             InitializeComponent();
+            this.dashboardPageViewModel = dashboardPageViewModel;
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell());
+            return new Window(new DashboardPageView(dashboardPageViewModel));
         }
     }
 }
