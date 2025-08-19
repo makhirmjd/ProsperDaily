@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ProsperDaily.Views.StatisticsPageView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Charts="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+    xmlns:Models="clr-namespace:ProsperDaily.Shared.Entities;assembly=ProsperDaily.Shared"
+    xmlns:ViewModels="clr-namespace:ProsperDaily.ViewModels"
+    Title="StatisticsPageView"
+    x:DataType="ViewModels:StatisticsPageViewModel">
+    <Grid RowDefinitions=".15*, .15*, .30*, .40*">
+        <RoundRectangle Grid.RowSpan="2" StyleClass="TopRectangle" />
+        <VerticalStackLayout StyleClass="Header">
+            <Label StyleClass="HeaderSubTitle" Text="Statistics" />
+        </VerticalStackLayout>
+
+        <Grid
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            StyleClass="BalancedGrid">
+            <RoundRectangle StyleClass="BalanceRectangle" />
+
+            <Charts:SfCartesianChart Margin="5,5,20,5">
+                <Charts:SfCartesianChart.XAxes>
+                    <Charts:CategoryAxis />
+                </Charts:SfCartesianChart.XAxes>
+
+                <Charts:SfCartesianChart.YAxes>
+                    <Charts:NumericalAxis />
+                </Charts:SfCartesianChart.YAxes>
+
+                <Charts:SplineSeries />
+                <Charts:SplineSeries />
+            </Charts:SfCartesianChart>
+        </Grid>
+
+        <Grid
+            Grid.Row="3"
+            RowDefinitions=".1*,.9*"
+            StyleClass="Margin15">
+            <Label Text="Top Spending" />
+
+            <CollectionView Grid.Row="1" EmptyView="No Data">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="15" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.EmptyViewTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Label StyleClass="NoDataText" Text="No data found, click on the + button to add a new transaction" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.EmptyViewTemplate>
+                <CollectionView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>mono</x:String>
+                        <x:String>monodroid</x:String>
+                        <x:String>monotouch</x:String>
+                        <x:String>monorail</x:String>
+                        <x:String>monodevelop</x:String>
+                        <x:String>monotone</x:String>
+                        <x:String>monopoly</x:String>
+                        <x:String>monomodal</x:String>
+                        <x:String>mononucleosis</x:String>
+                    </x:Array>
+                </CollectionView.ItemsSource>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="*,*">
+                            <Label StyleClass="StrongMediumTitle" Text="Transaction" />
+                            <Label
+                                Grid.Row="1"
+                                StyleClass="SmallFont"
+                                Text="Today" />
+                            <Label
+                                Grid.RowSpan="2"
+                                Grid.Column="1"
+                                StyleClass="ListAmount"
+                                Text="{Binding ListAmountPlaceHolder, StringFormat='+ {0:C}', Source={x:RelativeSource AncestorType={x:Type ViewModels:StatisticsPageViewModel}}}" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Grid>
+</ContentPage>
