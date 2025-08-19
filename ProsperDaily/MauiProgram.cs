@@ -5,6 +5,8 @@ using ProsperDaily.Data;
 using ProsperDaily.Services;
 using ProsperDaily.Shared.Services;
 using ProsperDaily.ViewModels;
+using Syncfusion.Licensing;
+using Syncfusion.Maui.Core.Hosting;
 using System.Globalization;
 
 namespace ProsperDaily;
@@ -14,9 +16,11 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
+        SyncfusionLicenseProvider.RegisterLicense("Mzk5NjgzNEAzMzMwMmUzMDJlMzAzYjMzMzAzYkZFNnVTWUVLKzIyZm9CZEV3N0VqTStuMUg0c0krQWRUQk8xdG9iVC9oL2s9");
         ConfigureDatabaseService(builder.Services);
         builder
             .UseMauiApp<App>()
+            .ConfigureSyncfusionCore()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -38,6 +42,7 @@ public static class MauiProgram
     {
         services.AddScoped<DashboardPageViewModel>();
         services.AddScoped<TransactionPageViewModel>();
+        services.AddScoped<StatisticsPageViewModel>();
     }
 
     private static void ConfigureDatabaseService(IServiceCollection services)
