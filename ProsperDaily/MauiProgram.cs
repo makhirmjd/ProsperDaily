@@ -53,7 +53,7 @@ public static class MauiProgram
     private static void ConfigureDatabaseService(IServiceCollection services)
     {
         services.AddSingleton<ICurrentUserService, CurrentUserService>();
-        services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite($"Filename={DatabasePath}"));
+        services.AddDbContextFactory<ApplicationDbContext>(options => options.UseSqlite($"Filename={DatabasePath}"));
         using AsyncServiceScope scope = services.BuildServiceProvider().CreateAsyncScope();
         ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         context.Database.Migrate();

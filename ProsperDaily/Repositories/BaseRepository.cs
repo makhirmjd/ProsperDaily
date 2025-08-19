@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace ProsperDaily.Repositories;
 
-public partial class BaseRepository<T>(ApplicationDbContext context) : IDisposable where T : Entity, new()
+public partial class BaseRepository<T>(IDbContextFactory<ApplicationDbContext> contextFactory) where T : Entity, new()
 {
     public (bool IsSuccess, int RowsAffected, string StatusMessage) LastOperationStatus { get; set; }
 
@@ -13,6 +13,7 @@ public partial class BaseRepository<T>(ApplicationDbContext context) : IDisposab
     {
         try
         {
+            await using ApplicationDbContext context = await contextFactory.CreateDbContextAsync();
             await context.Set<T>().AddAsync(entity);
             await context.SaveChangesAsync();
             LastOperationStatus = (true, 1, $"{typeof(T).Name} added successfully.");
@@ -27,6 +28,7 @@ public partial class BaseRepository<T>(ApplicationDbContext context) : IDisposab
     {
         try
         {
+            await using ApplicationDbContext context = await contextFactory.CreateDbContextAsync();
             List<T> entities = await context.Set<T>().ToListAsync();
             LastOperationStatus = (true, entities.Count, $"{typeof(T).Name}s retrieved successfully.");
             return entities;
@@ -42,6 +44,7 @@ public partial class BaseRepository<T>(ApplicationDbContext context) : IDisposab
     {
         try
         {
+            await using ApplicationDbContext context = await contextFactory.CreateDbContextAsync();
             List<T> entities = await context.Set<T>().Where(expression).ToListAsync();
             LastOperationStatus = (true, entities.Count, $"{typeof(T).Name}s retrieved successfully.");
             return entities;
@@ -57,6 +60,7 @@ public partial class BaseRepository<T>(ApplicationDbContext context) : IDisposab
     {
         try
         {
+            await using ApplicationDbContext context = await contextFactory.CreateDbContextAsync();
             List<T> entities = await context.Set<T>().FromSqlRaw(query).ToListAsync();
             LastOperationStatus = (true, entities.Count, $"{typeof(T).Name}s retrieved successfully.");
             return entities;
@@ -72,6 +76,7 @@ public partial class BaseRepository<T>(ApplicationDbContext context) : IDisposab
     {
         try
         {
+            await using ApplicationDbContext context = await contextFactory.CreateDbContextAsync();
             T? entity = await context.Set<T>().FindAsync(id);
             if (entity != null)
             {
@@ -94,6 +99,7 @@ public partial class BaseRepository<T>(ApplicationDbContext context) : IDisposab
     {
         try
         {
+            await using ApplicationDbContext context = await contextFactory.CreateDbContextAsync();
             context.Set<T>().Update(entity);
             await context.SaveChangesAsync();
             LastOperationStatus = (true, 1, $"{typeof(T).Name} updated successfully.");
@@ -108,6 +114,7 @@ public partial class BaseRepository<T>(ApplicationDbContext context) : IDisposab
     {
         try
         {
+            await using ApplicationDbContext context = await contextFactory.CreateDbContextAsync();
             context.Remove(entity);
             await context.SaveChangesAsync();
             LastOperationStatus = (true, 1, $"{typeof(T).Name} deleted successfully.");
@@ -136,11 +143,5 @@ public partial class BaseRepository<T>(ApplicationDbContext context) : IDisposab
         {
             LastOperationStatus = (false, 0, $"Error deleting {typeof(T).Name} with ID {id}: {ex.Message}");
         }
-    }
-
-    public async void Dispose()
-    {
-        await context.DisposeAsync();
-        GC.SuppressFinalize(this);
     }
 }

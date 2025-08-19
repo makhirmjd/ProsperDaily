@@ -10,7 +10,7 @@ public partial class TransactionPageViewModel(BaseRepository<Transaction> reposi
     IDialogService dialogService, INavigationService navigationService) : ObservableObject
 {
     [ObservableProperty]
-    public Transaction transaction = new();
+    private Transaction transaction = new();
 
     [RelayCommand]
     public async Task SaveTransaction()

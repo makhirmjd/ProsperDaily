@@ -21,8 +21,8 @@ namespace ProsperDaily
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            //return new Window(new NavigationPage(new DashboardPageView(dashboardPageViewModel)));
-            return new Window(new TransactionPageView(transactionPageViewModel));
+            return new Window(new NavigationPage(new DashboardPageView(dashboardPageViewModel)));
+            //return new Window(new TransactionPageView(transactionPageViewModel));
             //return new Window(new StatisticsPageView(statisticsPageViewModel));
         }
     }
