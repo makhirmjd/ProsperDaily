@@ -30,7 +30,7 @@ public partial class ApplicationDbContext(DbContextOptions<ApplicationDbContext>
                 if (property.Name.Equals(Created, StringComparison.InvariantCultureIgnoreCase) ||
                     property.Name.Equals(LastModified, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    modelBuilder.Entity(entityType.Name).Property<DateTimeOffset>(property.Name).HasDefaultValueSql("getutcdate()");
+                    modelBuilder.Entity(entityType.Name).Property<DateTimeOffset>(property.Name).HasDefaultValueSql("datetime('now')");
                 }
 
                 if (property.ClrType == typeof(string) && property.Name.EndsWith("Url", StringComparison.InvariantCultureIgnoreCase))
