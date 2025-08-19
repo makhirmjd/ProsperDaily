@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
+using ProsperDaily.Shared.Entities;
 using ProsperDaily.Shared.Entities.Annotations;
 using ProsperDaily.Shared.Services;
 using System.Reflection;
@@ -9,6 +10,9 @@ namespace ProsperDaily.Data;
 
 public partial class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, ICurrentUserService currentUserService) : DbContext(options)
 {
+
+    public DbSet<Transaction> Transactions => Set<Transaction>();
+
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         configurationBuilder.Properties<decimal>().HavePrecision(18, 2);

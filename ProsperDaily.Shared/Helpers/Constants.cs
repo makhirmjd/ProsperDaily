@@ -6,7 +6,7 @@ namespace ProsperDaily.Shared.Helpers;
 public static class Constants
 {
     // Db Configuration
-    public const string DatabaseName = "SqliteDemo.db3";
+    public const string DatabaseName = "ProperDaily.db3";
     public const string Admin = "Admin";
     public const string Created = "Created";
     public const string CreatedBy = "CreatedBy";
