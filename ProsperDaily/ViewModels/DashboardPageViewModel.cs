@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ProsperDaily.Repositories;
 using ProsperDaily.Services;
 using ProsperDaily.Shared.Entities;
@@ -12,11 +13,15 @@ public partial class DashboardPageViewModel : BaseViewModel
     private readonly BaseRepository<Transaction> repository;
     private readonly INavigationService navigationService;
 
-    public ObservableCollection<Transaction> Transactions { get; set; } = [];
+    [ObservableProperty]
+    private ObservableCollection<Transaction> transactions = [];
 
-    public decimal TotalBalance => Transactions.ToList().Sum(x => x.Amount);
-    public decimal Income => Transactions.Where(x => x.IsIncome).ToList().Sum(x => x.Amount);
-    public decimal Expenses => Transactions.Where(x => !x.IsIncome).ToList().Sum(x => x.Amount);
+    [ObservableProperty]
+    private decimal totalBalance;
+    [ObservableProperty]
+    private decimal income;
+    [ObservableProperty]
+    private decimal expenses;
 
 
     public DashboardPageViewModel(BaseRepository<Transaction> repository, 
@@ -24,13 +29,31 @@ public partial class DashboardPageViewModel : BaseViewModel
 	{
         this.repository = repository;
         this.navigationService = navigationService;
-        _ = FillData();
+        _ = RefreshData();
     }
 
-    private async Task FillData()
+    public async Task RefreshData()
     {
         List<Transaction> transactions = await repository.GetAllAsync();
-        Transactions = [.. transactions.OrderByDescending(t => t.TransactionDate)];
+        Transactions.Clear();
+        decimal totalBalance = 0;
+        decimal totalIncome = 0;
+        decimal totalExpenses = 0;
+        foreach (Transaction transaction in transactions.OrderByDescending(t => t.TransactionDate))
+        {
+            Transactions.Add(transaction);
+            if (transaction.IsIncome)
+            {
+                totalIncome += transaction.Amount;
+            }
+            else
+            {
+                totalExpenses += transaction.Amount;
+            }
+        }
+        TotalBalance = totalIncome - totalExpenses;
+        Income = totalIncome;
+        Expenses = totalExpenses;
     }
 
     [RelayCommand]

@@ -12,4 +12,9 @@ public partial class DashboardPageView : ContentPage
         this.viewModel = viewModel;
         BindingContext = viewModel;
     }
+
+    protected override async void OnAppearing()
+    {
+        await viewModel.RefreshData();
+    }
 }
