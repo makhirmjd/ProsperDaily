@@ -1,29 +1,33 @@
-﻿using ProsperDaily.ViewModels;
+﻿using Microsoft.EntityFrameworkCore;
+using ProsperDaily.Data;
+using ProsperDaily.ViewModels;
 using ProsperDaily.Views;
 
 namespace ProsperDaily
 {
     public partial class App : Application
     {
-        private readonly DashboardPageViewModel dashboardPageViewModel;
-        private readonly TransactionPageViewModel transactionPageViewModel;
-        private readonly StatisticsPageViewModel statisticsPageViewModel;
+        private readonly DashboardPageView dashboardPageView;
+        private readonly IDbContextFactory<ApplicationDbContext> contextFactory;
 
-        public App(DashboardPageViewModel dashboardPageViewModel, 
-            TransactionPageViewModel transactionPageViewModel,
-            StatisticsPageViewModel statisticsPageViewModel)
+        public App(DashboardPageView dashboardPageView, IDbContextFactory<ApplicationDbContext> contextFactory)
         {
             InitializeComponent();
-            this.dashboardPageViewModel = dashboardPageViewModel;
-            this.transactionPageViewModel = transactionPageViewModel;
-            this.statisticsPageViewModel = statisticsPageViewModel;
+            this.dashboardPageView = dashboardPageView;
+            this.contextFactory = contextFactory;
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            //return new Window(new NavigationPage(new DashboardPageView(dashboardPageViewModel)));
-            return new Window(new TransactionPageView(transactionPageViewModel));
+            return new Window(new NavigationPage(dashboardPageView));
+            //return new Window(new TransactionPageView(transactionPageViewModel));
             //return new Window(new StatisticsPageView(statisticsPageViewModel));
+        }
+
+        protected override async void OnStart()
+        {
+            await using ApplicationDbContext context = await contextFactory.CreateDbContextAsync();
+            await context.Database.MigrateAsync();
         }
     }
 }

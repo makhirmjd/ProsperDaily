@@ -2,22 +2,12 @@
 
 public class DialogService : IDialogService
 {
-    public async Task ShowAlertAsync(string title, string message, string cancelButton = "OK")
-    {
-        Page? page = Application.Current?.Windows[0]?.Page;
-        if ( page is not null)
-        {
-            await page.DisplayAlert(title, message, cancelButton);
-        }
-    }
+    private static Page? Page => Shell.Current?.Window?.Page
+        ?? Application.Current?.Windows[0]?.Page;
 
-    public async Task<bool> ShowConfirmAsync(string title, string message, string acceptButton = "Yes", string cancelButton = "No")
-    {
-        Page? page = Application.Current?.Windows[0]?.Page;
-        if (page is not null)
-        {
-            return await page.DisplayAlert(title, message, acceptButton, cancelButton);
-        }
-        return false;
-    }
+    public Task<bool> ConfirmAsync(string title, string message, string accept = "OK", string cancel = "Cancel")
+        => Page?.DisplayAlert(title, message, accept, cancel) ?? Task.FromResult(false);
+
+    public Task AlertAsync(string title, string message, string cancel = "OK")
+        => Page?.DisplayAlert(title, message, cancel) ?? Task.CompletedTask;
 }

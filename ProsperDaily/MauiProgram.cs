@@ -7,6 +7,7 @@ using ProsperDaily.Services;
 using ProsperDaily.Shared.Entities;
 using ProsperDaily.Shared.Services;
 using ProsperDaily.ViewModels;
+using ProsperDaily.Views;
 using Syncfusion.Licensing;
 using Syncfusion.Maui.Core.Hosting;
 using System.Globalization;
@@ -19,7 +20,6 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         SyncfusionLicenseProvider.RegisterLicense("Mzk5NjgzNEAzMzMwMmUzMDJlMzAzYjMzMzAzYkZFNnVTWUVLKzIyZm9CZEV3N0VqTStuMUg0c0krQWRUQk8xdG9iVC9oL2s9");
-        ConfigureDatabaseService(builder.Services);
         builder
             .UseMauiApp<App>()
             .ConfigureSyncfusionCore()
@@ -44,19 +44,27 @@ public static class MauiProgram
     {
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<INavigationService, NavigationService>();
-        services.AddScoped<BaseRepository<Transaction>>();
-        services.AddScoped<DashboardPageViewModel>();
-        services.AddScoped<TransactionPageViewModel>();
-        services.AddScoped<StatisticsPageViewModel>();
+
+        ConfigureDatabaseService(services);
+
+        services.AddTransient<AppShell>();
+
+        services.AddTransient<BaseRepository<Transaction>>();
+
+
+        services.AddTransient<DashboardPageViewModel>();
+        services.AddTransient<TransactionPageViewModel>();
+        services.AddTransient<StatisticsPageViewModel>();
+
+        services.AddTransient<DashboardPageView>();
+        services.AddTransient<TransactionPageView>();
+        services.AddTransient<StatisticsPageView>();
     }
 
     private static void ConfigureDatabaseService(IServiceCollection services)
     {
         services.AddSingleton<ICurrentUserService, CurrentUserService>();
-        services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite($"Filename={DatabasePath}"));
-        using AsyncServiceScope scope = services.BuildServiceProvider().CreateAsyncScope();
-        ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        context.Database.Migrate();
+        services.AddDbContextFactory<ApplicationDbContext>(options => options.UseSqlite($"Filename={DatabasePath}"));
     }
 
     private static void ConfigureCulture()

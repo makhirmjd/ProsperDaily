@@ -4,12 +4,12 @@ namespace ProsperDaily.Views;
 
 public partial class StatisticsPageView : ContentPage
 {
-    private readonly StatisticsPageViewModel statisticsPageViewModel;
+    private readonly StatisticsPageViewModel viewModel;
 
-    public StatisticsPageView(StatisticsPageViewModel statisticsPageViewModel)
+    public StatisticsPageView(StatisticsPageViewModel viewModel)
 	{
 		InitializeComponent();
-        this.statisticsPageViewModel = statisticsPageViewModel;
-        BindingContext = statisticsPageViewModel;
+        this.viewModel = viewModel;
+        BindingContext = viewModel;
     }
 }

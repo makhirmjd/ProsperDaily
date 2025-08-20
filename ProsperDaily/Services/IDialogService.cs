@@ -1,8 +1,9 @@
 ﻿
+
 namespace ProsperDaily.Services;
 
 public interface IDialogService
 {
-    Task ShowAlertAsync(string title, string message, string cancelButton = "OK");
-    Task<bool> ShowConfirmAsync(string title, string message, string acceptButton = "Yes", string cancelButton = "No");
+    Task AlertAsync(string title, string message, string cancel = "OK");
+    Task<bool> ConfirmAsync(string title, string message, string accept = "OK", string cancel = "Cancel");
 }

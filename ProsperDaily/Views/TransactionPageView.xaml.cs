@@ -4,12 +4,12 @@ namespace ProsperDaily.Views;
 
 public partial class TransactionPageView : ContentPage
 {
-    private readonly TransactionPageViewModel transactionPageViewModel;
+    private readonly TransactionPageViewModel viewModel;
 
-    public TransactionPageView(TransactionPageViewModel transactionPageViewModel)
+    public TransactionPageView(TransactionPageViewModel viewModel)
 	{
 		InitializeComponent();
-        this.transactionPageViewModel = transactionPageViewModel;
-        BindingContext = transactionPageViewModel;
+        this.viewModel = viewModel;
+        BindingContext = viewModel;
     }
 }

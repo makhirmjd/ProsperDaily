@@ -4,12 +4,17 @@ namespace ProsperDaily.Views;
 
 public partial class DashboardPageView : ContentPage
 {
-    private readonly DashboardPageViewModel dashboardPageViewModel;
+    private readonly DashboardPageViewModel viewModel;
 
-    public DashboardPageView(DashboardPageViewModel dashboardPageViewModel)
+    public DashboardPageView(DashboardPageViewModel viewModel)
 	{
 		InitializeComponent();
-        this.dashboardPageViewModel = dashboardPageViewModel;
-        BindingContext = dashboardPageViewModel;
+        this.viewModel = viewModel;
+        BindingContext = viewModel;
+    }
+
+    protected override async void OnAppearing()
+    {
+        await viewModel.RefreshData();
     }
 }

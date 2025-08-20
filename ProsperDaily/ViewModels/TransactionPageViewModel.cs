@@ -7,10 +7,10 @@ using ProsperDaily.Shared.Entities;
 namespace ProsperDaily.ViewModels;
 
 public partial class TransactionPageViewModel(BaseRepository<Transaction> repository, 
-    IDialogService dialogService, INavigationService navigationService) : ObservableObject
+    IDialogService dialogService, INavigationService navigationService) : BaseViewModel
 {
     [ObservableProperty]
-    public Transaction transaction = new();
+    private Transaction transaction = new();
 
     [RelayCommand]
     public async Task SaveTransaction()
@@ -23,7 +23,7 @@ public partial class TransactionPageViewModel(BaseRepository<Transaction> reposi
         {
             await repository.UpdateAsync(Transaction);
         }
-        await dialogService.ShowAlertAsync("Info", repository.LastOperationStatus.StatusMessage);
+        await dialogService.AlertAsync("Info", repository.LastOperationStatus.StatusMessage);
         await navigationService.PopToRootAsync();
     }
 

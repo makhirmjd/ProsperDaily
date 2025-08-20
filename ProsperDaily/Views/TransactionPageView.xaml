@@ -27,7 +27,7 @@
                 <Border StyleClass="FrameBorder">
                     <Entry
                         Keyboard="Numeric"
-                        Text="{Binding Transaction.Amount, StringFormat='{0:C}'}"
+                        Text="{Binding Transaction.Amount}"
                         VerticalOptions="Center" />
                 </Border>
                 <Label StyleClass="MarginT15" Text="Transaction Date" />
