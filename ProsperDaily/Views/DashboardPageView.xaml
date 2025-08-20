@@ -41,6 +41,7 @@
         </Grid>
         <Button
             Grid.Row="2"
+            Command="{Binding AddTransactionCommand}"
             StyleClass="CircularButton"
             Text="+" />
         <Grid

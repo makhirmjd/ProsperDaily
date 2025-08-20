@@ -1,31 +1,30 @@
 ﻿namespace ProsperDaily.Services;
 
-public  class NavigationService : INavigationService
+public  class NavigationService(IServiceProvider services, IPageResolver resolver) : INavigationService
 {
-    private static Page? CurrentPage => Application.Current?.Windows[0]?.Page;
-    private static INavigation? Navigation => CurrentPage?.Navigation;
+    private static INavigation Navigation => Shell.Current?.Navigation
+        ?? Application.Current?.Windows[0]?.Navigation
+        ?? throw new InvalidOperationException("No navigation stack available.");
 
-    public async Task PushAsync(Page page)
-    {
-        if (Navigation is not null)
-        {
-            await Navigation.PushAsync(page);
-        }
-    }
+    public async Task PushAsync<TViewModel>(object? parameter = default, bool animated = true)
+        => await Navigation.PushAsync(CreatePage<TViewModel>(parameter), animated);
 
-    public async Task PopAsync()
-    {
-        if (Navigation is not null && Navigation.NavigationStack.Count > 1)
-        {
-            await Navigation.PopAsync();
-        }
-    }
+    public Task PopAsync(bool animated = true) => Navigation.PopAsync(animated);
+    public Task PopToRootAsync(bool animated = true) => Navigation.PopToRootAsync(animated);
 
-    public async Task PopToRootAsync()
+    public async Task ShowModalAsync<TViewModel>(object? parameter = default, bool animated = true)
+        => await Navigation.PushModalAsync(CreatePage<TViewModel>(parameter), animated);
+
+    private Page CreatePage<TViewModel>(object? parameter)
     {
-        if (Navigation is not null)
+        Page page = resolver.ResolvePageForViewModel(typeof(TViewModel), services);
+
+        if (parameter is not null && page is IQueryAttributable queryAware)
         {
-            await Navigation.PopToRootAsync();
+            IDictionary<string, object> dict =
+                parameter as IDictionary<string, object> ?? new Dictionary<string, object> { ["param"] = parameter };
+            queryAware.ApplyQueryAttributes(dict);
         }
+        return page;
     }
 }

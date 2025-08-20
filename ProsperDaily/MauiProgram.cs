@@ -2,11 +2,13 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls;
 using ProsperDaily.Data;
+using ProsperDaily.Extensions;
 using ProsperDaily.Repositories;
 using ProsperDaily.Services;
 using ProsperDaily.Shared.Entities;
 using ProsperDaily.Shared.Services;
 using ProsperDaily.ViewModels;
+using ProsperDaily.Views;
 using Syncfusion.Licensing;
 using Syncfusion.Maui.Core.Hosting;
 using System.Globalization;
@@ -44,10 +46,16 @@ public static class MauiProgram
     {
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<INavigationService, NavigationService>();
+        services.AddSingleton<IDispatcher, MauiDispatcher>();
+
+        services.AddSingleton<AppShell>();
+
         services.AddScoped<BaseRepository<Transaction>>();
-        services.AddScoped<DashboardPageViewModel>();
-        services.AddScoped<TransactionPageViewModel>();
-        services.AddScoped<StatisticsPageViewModel>();
+
+
+        services.AddPage<DashboardPageView, DashboardPageViewModel>();
+        services.AddPage<TransactionPageView, TransactionPageViewModel>();
+        services.AddPage<StatisticsPageView, StatisticsPageViewModel>();
     }
 
     private static void ConfigureDatabaseService(IServiceCollection services)

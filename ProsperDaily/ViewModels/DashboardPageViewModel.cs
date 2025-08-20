@@ -1,13 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ProsperDaily.Repositories;
+using ProsperDaily.Services;
 using ProsperDaily.Shared.Entities;
 using System.Collections.ObjectModel;
 
 namespace ProsperDaily.ViewModels;
 
-public partial class DashboardPageViewModel : ObservableObject
+public partial class DashboardPageViewModel : BaseViewModel
 {
     private readonly BaseRepository<Transaction> repository;
+    private readonly INavigationService navigationService;
 
     public ObservableCollection<Transaction> Transactions { get; set; } = [];
 
@@ -16,9 +19,11 @@ public partial class DashboardPageViewModel : ObservableObject
     public decimal Expenses => Transactions.Where(x => !x.IsIncome).ToList().Sum(x => x.Amount);
 
 
-    public DashboardPageViewModel(BaseRepository<Transaction> repository)
+    public DashboardPageViewModel(BaseRepository<Transaction> repository, 
+        INavigationService navigationService)
 	{
         this.repository = repository;
+        this.navigationService = navigationService;
         _ = FillData();
     }
 
@@ -27,4 +32,7 @@ public partial class DashboardPageViewModel : ObservableObject
         List<Transaction> transactions = await repository.GetAllAsync();
         Transactions = [.. transactions.OrderByDescending(t => t.TransactionDate)];
     }
+
+    [RelayCommand]
+    public async Task AddTransaction() => await navigationService.PushAsync<TransactionPageViewModel>();
 }

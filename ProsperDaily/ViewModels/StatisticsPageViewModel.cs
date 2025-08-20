@@ -2,7 +2,7 @@
 
 namespace ProsperDaily.ViewModels;
 
-public partial class StatisticsPageViewModel : ObservableObject
+public partial class StatisticsPageViewModel : BaseViewModel
 {
     public decimal ListAmountPlaceHolder => 12345m;
 }

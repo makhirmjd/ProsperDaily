@@ -5,23 +5,17 @@ namespace ProsperDaily
 {
     public partial class App : Application
     {
-        private readonly DashboardPageViewModel dashboardPageViewModel;
-        private readonly TransactionPageViewModel transactionPageViewModel;
-        private readonly StatisticsPageViewModel statisticsPageViewModel;
+        private readonly DashboardPageView dashboardPageView;
 
-        public App(DashboardPageViewModel dashboardPageViewModel, 
-            TransactionPageViewModel transactionPageViewModel,
-            StatisticsPageViewModel statisticsPageViewModel)
+        public App(DashboardPageView dashboardPageView)
         {
             InitializeComponent();
-            this.dashboardPageViewModel = dashboardPageViewModel;
-            this.transactionPageViewModel = transactionPageViewModel;
-            this.statisticsPageViewModel = statisticsPageViewModel;
+            this.dashboardPageView = dashboardPageView;
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new NavigationPage(new DashboardPageView(dashboardPageViewModel)));
+            return new Window(new NavigationPage(dashboardPageView));
             //return new Window(new TransactionPageView(transactionPageViewModel));
             //return new Window(new StatisticsPageView(statisticsPageViewModel));
         }
