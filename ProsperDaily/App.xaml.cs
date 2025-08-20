@@ -9,20 +9,19 @@ namespace ProsperDaily
     {
         private readonly DashboardPageView dashboardPageView;
         private readonly StatisticsPageView statisticsPageView;
+        private readonly AppContainerView appContainerView;
         private readonly IDbContextFactory<ApplicationDbContext> contextFactory;
 
-        public App(DashboardPageView dashboardPageView, StatisticsPageView statisticsPageView, IDbContextFactory<ApplicationDbContext> contextFactory)
+        public App(AppContainerView appContainerView, IDbContextFactory<ApplicationDbContext> contextFactory)
         {
             InitializeComponent();
-            this.dashboardPageView = dashboardPageView;
-            this.statisticsPageView = statisticsPageView;
+            this.appContainerView = appContainerView;
             this.contextFactory = contextFactory;
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            //return new Window(new NavigationPage(dashboardPageView));
-            return new Window(new NavigationPage(statisticsPageView));
+            return new Window(appContainerView);
         }
 
         protected override async void OnStart()

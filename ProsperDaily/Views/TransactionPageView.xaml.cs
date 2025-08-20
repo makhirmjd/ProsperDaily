@@ -9,6 +9,7 @@ public partial class TransactionPageView : ContentPage
     public TransactionPageView(TransactionPageViewModel viewModel)
 	{
 		InitializeComponent();
+        viewModel.Owner = this; 
         this.viewModel = viewModel;
         BindingContext = viewModel;
     }

@@ -6,7 +6,7 @@
     xmlns:Charts="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
     xmlns:Models="clr-namespace:ProsperDaily.Shared.Entities;assembly=ProsperDaily.Shared"
     xmlns:ViewModels="clr-namespace:ProsperDaily.ViewModels"
-    Title="StatisticsPageView"
+    Title="Statistics"
     x:DataType="ViewModels:StatisticsPageViewModel">
     <Grid RowDefinitions=".15*, .15*, .30*, .40*">
         <RoundRectangle Grid.RowSpan="2" StyleClass="TopRectangle" />

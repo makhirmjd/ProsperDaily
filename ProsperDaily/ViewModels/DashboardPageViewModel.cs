@@ -59,6 +59,6 @@ public partial class DashboardPageViewModel : BaseViewModel
     [RelayCommand]
     public async Task AddTransaction()
     {
-        await navigationService.PushAsync<TransactionPageView>();
+        await navigationService.PushTabbedNavigationAsync<TransactionPageView>();
     }
 }
