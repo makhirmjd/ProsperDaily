@@ -4,8 +4,12 @@ namespace ProsperDaily.Views;
 
 public partial class DashboardPageView : ContentPage
 {
-    public DashboardPageView()
+    private readonly DashboardPageViewModel viewModel;
+
+    public DashboardPageView(DashboardPageViewModel viewModel)
 	{
 		InitializeComponent();
+        this.viewModel = viewModel;
+        BindingContext = viewModel;
     }
 }

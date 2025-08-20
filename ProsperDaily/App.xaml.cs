@@ -1,4 +1,6 @@
-﻿using ProsperDaily.ViewModels;
+﻿using Microsoft.EntityFrameworkCore;
+using ProsperDaily.Data;
+using ProsperDaily.ViewModels;
 using ProsperDaily.Views;
 
 namespace ProsperDaily
@@ -6,11 +8,13 @@ namespace ProsperDaily
     public partial class App : Application
     {
         private readonly DashboardPageView dashboardPageView;
+        private readonly IDbContextFactory<ApplicationDbContext> contextFactory;
 
-        public App(DashboardPageView dashboardPageView)
+        public App(DashboardPageView dashboardPageView, IDbContextFactory<ApplicationDbContext> contextFactory)
         {
             InitializeComponent();
             this.dashboardPageView = dashboardPageView;
+            this.contextFactory = contextFactory;
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
@@ -18,6 +22,12 @@ namespace ProsperDaily
             return new Window(new NavigationPage(dashboardPageView));
             //return new Window(new TransactionPageView(transactionPageViewModel));
             //return new Window(new StatisticsPageView(statisticsPageViewModel));
+        }
+
+        protected override async void OnStart()
+        {
+            await using ApplicationDbContext context = await contextFactory.CreateDbContextAsync();
+            await context.Database.MigrateAsync();
         }
     }
 }

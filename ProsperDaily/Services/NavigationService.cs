@@ -1,24 +1,24 @@
 ﻿namespace ProsperDaily.Services;
 
-public  class NavigationService(IServiceProvider services, IPageResolver resolver) : INavigationService
+public  class NavigationService(IServiceProvider provider): INavigationService
 {
-    private static INavigation Navigation => Shell.Current?.Navigation
-        ?? Application.Current?.Windows[0]?.Navigation
-        ?? throw new InvalidOperationException("No navigation stack available.");
+    private static INavigation Navigation =>
+    (Application.Current?.Windows.Count > 0
+        ? Application.Current.Windows[0].Page as NavigationPage
+        : null)?.Navigation
+    ?? throw new InvalidOperationException("No navigation context available");
 
-    public async Task PushAsync<TViewModel>(object? parameter = default, bool animated = true)
-        => await Navigation.PushAsync(CreatePage<TViewModel>(parameter), animated);
+    public async Task PushAsync<TPage>(object? parameter = default, bool animated = true) where TPage : Page
+        => await Navigation.PushAsync(ApplyQuery(provider.GetRequiredService<TPage>(), parameter), animated);
 
     public Task PopAsync(bool animated = true) => Navigation.PopAsync(animated);
     public Task PopToRootAsync(bool animated = true) => Navigation.PopToRootAsync(animated);
 
-    public async Task ShowModalAsync<TViewModel>(object? parameter = default, bool animated = true)
-        => await Navigation.PushModalAsync(CreatePage<TViewModel>(parameter), animated);
+    public async Task ShowModalAsync<TPage>(object? parameter = default, bool animated = true) where TPage : Page
+        => await Navigation.PushModalAsync(ApplyQuery(provider.GetRequiredService<TPage>(), parameter), animated);
 
-    private Page CreatePage<TViewModel>(object? parameter)
+    private static Page ApplyQuery(Page page, object? parameter)
     {
-        Page page = resolver.ResolvePageForViewModel(typeof(TViewModel), services);
-
         if (parameter is not null && page is IQueryAttributable queryAware)
         {
             IDictionary<string, object> dict =

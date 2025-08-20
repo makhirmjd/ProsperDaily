@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls;
 using ProsperDaily.Data;
-using ProsperDaily.Extensions;
 using ProsperDaily.Repositories;
 using ProsperDaily.Services;
 using ProsperDaily.Shared.Entities;
@@ -21,7 +20,6 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         SyncfusionLicenseProvider.RegisterLicense("Mzk5NjgzNEAzMzMwMmUzMDJlMzAzYjMzMzAzYkZFNnVTWUVLKzIyZm9CZEV3N0VqTStuMUg0c0krQWRUQk8xdG9iVC9oL2s9");
-        ConfigureDatabaseService(builder.Services);
         builder
             .UseMauiApp<App>()
             .ConfigureSyncfusionCore()
@@ -46,25 +44,27 @@ public static class MauiProgram
     {
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<INavigationService, NavigationService>();
-        services.AddSingleton<IDispatcher, MauiDispatcher>();
 
-        services.AddSingleton<AppShell>();
+        ConfigureDatabaseService(services);
 
-        services.AddScoped<BaseRepository<Transaction>>();
+        services.AddTransient<AppShell>();
+
+        services.AddTransient<BaseRepository<Transaction>>();
 
 
-        services.AddPage<DashboardPageView, DashboardPageViewModel>();
-        services.AddPage<TransactionPageView, TransactionPageViewModel>();
-        services.AddPage<StatisticsPageView, StatisticsPageViewModel>();
+        services.AddTransient<DashboardPageViewModel>();
+        services.AddTransient<TransactionPageViewModel>();
+        services.AddTransient<StatisticsPageViewModel>();
+
+        services.AddTransient<DashboardPageView>();
+        services.AddTransient<TransactionPageView>();
+        services.AddTransient<StatisticsPageView>();
     }
 
     private static void ConfigureDatabaseService(IServiceCollection services)
     {
         services.AddSingleton<ICurrentUserService, CurrentUserService>();
         services.AddDbContextFactory<ApplicationDbContext>(options => options.UseSqlite($"Filename={DatabasePath}"));
-        using AsyncServiceScope scope = services.BuildServiceProvider().CreateAsyncScope();
-        ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        context.Database.Migrate();
     }
 
     private static void ConfigureCulture()

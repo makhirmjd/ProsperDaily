@@ -1,8 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using ProsperDaily.Repositories;
 using ProsperDaily.Services;
 using ProsperDaily.Shared.Entities;
+using ProsperDaily.Views;
 using System.Collections.ObjectModel;
 
 namespace ProsperDaily.ViewModels;
@@ -34,5 +34,8 @@ public partial class DashboardPageViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task AddTransaction() => await navigationService.PushAsync<TransactionPageViewModel>();
+    public async Task AddTransaction()
+    {
+        await navigationService.PushAsync<TransactionPageView>();
+    }
 }
