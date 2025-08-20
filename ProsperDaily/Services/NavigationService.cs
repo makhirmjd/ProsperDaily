@@ -8,8 +8,18 @@ public  class NavigationService(IServiceProvider provider): INavigationService
         : null)?.Navigation
     ?? throw new InvalidOperationException("No navigation context available");
 
+    private static TabbedPage TabbedPage =>
+    (Application.Current?.Windows.Count > 0
+        ? Application.Current.Windows[0].Page as TabbedPage
+        : null) ?? throw new InvalidOperationException("No navigation context available");
+
     public async Task PushAsync<TPage>(object? parameter = default, bool animated = true) where TPage : Page
         => await Navigation.PushAsync(ApplyQuery(provider.GetRequiredService<TPage>(), parameter), animated);
+
+    public async Task PushTabbedNavigationAsync<TPage>(object? parameter = default, bool animated = true) where TPage : Page
+    {
+        await TabbedPage.Children[0].Navigation.PushAsync(ApplyQuery(provider.GetRequiredService<TPage>(), parameter), animated);
+    }
 
     public Task PopAsync(bool animated = true) => Navigation.PopAsync(animated);
     public Task PopToRootAsync(bool animated = true) => Navigation.PopToRootAsync(animated);

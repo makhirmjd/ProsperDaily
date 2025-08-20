@@ -47,6 +47,8 @@ public static class MauiProgram
 
         ConfigureDatabaseService(services);
 
+        services.AddSingleton<AppContainerView>();
+
         services.AddTransient<AppShell>();
 
         services.AddTransient<BaseRepository<Transaction>>();

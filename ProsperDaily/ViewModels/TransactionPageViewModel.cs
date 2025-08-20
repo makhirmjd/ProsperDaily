@@ -24,9 +24,9 @@ public partial class TransactionPageViewModel(BaseRepository<Transaction> reposi
             await repository.UpdateAsync(Transaction);
         }
         await dialogService.AlertAsync("Info", repository.LastOperationStatus.StatusMessage);
-        await navigationService.PopToRootAsync();
+        await Owner!.Navigation.PopAsync();
     }
 
     [RelayCommand]
-    public async Task Cancel() => await navigationService.PopToRootAsync();
+    public async Task Cancel() => await Owner!.Navigation.PopAsync();
 }
