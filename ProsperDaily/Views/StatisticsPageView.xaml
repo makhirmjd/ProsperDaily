@@ -63,12 +63,13 @@
                             <Label
                                 Grid.Row="1"
                                 StyleClass="SmallFont"
-                                Text="{Binding TransactionDate, StringFormat='{0:dd/MM/yyy}'}" />
+                                Text="{Binding TransactionDateString}" />
                             <Label
                                 Grid.RowSpan="2"
                                 Grid.Column="1"
                                 StyleClass="ListAmount"
-                                Text="{Binding Amount, StringFormat='+ {0:C}'}" />
+                                Text="{Binding AmountText}"
+                                TextColor="{Binding AmountColor}" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

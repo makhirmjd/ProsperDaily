@@ -6,7 +6,8 @@
     xmlns:Models="clr-namespace:ProsperDaily.Shared.Entities;assembly=ProsperDaily.Shared"
     xmlns:ViewModels="clr-namespace:ProsperDaily.ViewModels"
     Title="DashboardPageView"
-    x:DataType="ViewModels:DashboardPageViewModel">
+    x:DataType="ViewModels:DashboardPageViewModel"
+    NavigationPage.HasNavigationBar="False">
     <Grid RowDefinitions=".15*,.15*,.15*,.55*">
         <RoundRectangle Grid.RowSpan="2" StyleClass="TopRectangle" />
         <VerticalStackLayout StyleClass="Header">
@@ -70,7 +71,7 @@
                             <Label
                                 Grid.Row="1"
                                 StyleClass="SmallFont"
-                                Text="{Binding TransactionDate, StringFormat='{0:dd/MM/yyy}'}" />
+                                Text="{Binding TransactionDateString}" />
                             <Label
                                 Grid.RowSpan="2"
                                 Grid.Column="1"

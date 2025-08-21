@@ -6,7 +6,8 @@
     xmlns:Models="clr-namespace:ProsperDaily.Shared.Entities;assembly=ProsperDaily.Shared"
     xmlns:ViewModels="clr-namespace:ProsperDaily.ViewModels"
     Title="TransactionPageView"
-    x:DataType="ViewModels:TransactionPageViewModel">
+    x:DataType="ViewModels:TransactionPageViewModel"
+    NavigationPage.HasNavigationBar="False">
     <Grid RowDefinitions=".15*,.15*,.7*">
         <RoundRectangle Grid.RowSpan="2" StyleClass="TopRectangle" />
         <VerticalStackLayout StyleClass="Header">
