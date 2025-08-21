@@ -11,8 +11,7 @@ namespace ProsperDaily.ViewModels;
 public partial class DashboardPageViewModel : BaseViewModel
 {
     private readonly BaseRepository<Transaction> repository;
-    private readonly INavigationService navigationService;
-
+    private readonly IServiceProvider provider;
     [ObservableProperty]
     private ObservableCollection<Transaction> transactions = [];
 
@@ -25,10 +24,10 @@ public partial class DashboardPageViewModel : BaseViewModel
 
 
     public DashboardPageViewModel(BaseRepository<Transaction> repository, 
-        INavigationService navigationService)
+        IServiceProvider provider)
 	{
         this.repository = repository;
-        this.navigationService = navigationService;
+        this.provider = provider;
         _ = RefreshData();
     }
 
@@ -59,6 +58,7 @@ public partial class DashboardPageViewModel : BaseViewModel
     [RelayCommand]
     public async Task AddTransaction()
     {
-        await navigationService.PushTabbedNavigationAsync<TransactionPageView>();
+        TransactionPageView transactionPageView = provider.GetRequiredService<TransactionPageView>();
+        await Owner!.Navigation.PushAsync(transactionPageView);
     }
 }

@@ -12,6 +12,7 @@ public partial class StatisticsPageView : ContentPage
 		InitializeComponent();
         this.viewModel = viewModel;
         BindingContext = viewModel;
+        viewModel.Owner = this;
     }
 
     protected override async void OnAppearing()

@@ -43,7 +43,6 @@ public static class MauiProgram
     private static void ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton<IDialogService, DialogService>();
-        services.AddSingleton<INavigationService, NavigationService>();
 
         ConfigureDatabaseService(services);
 

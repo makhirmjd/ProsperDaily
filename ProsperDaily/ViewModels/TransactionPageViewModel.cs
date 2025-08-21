@@ -7,7 +7,7 @@ using ProsperDaily.Shared.Entities;
 namespace ProsperDaily.ViewModels;
 
 public partial class TransactionPageViewModel(BaseRepository<Transaction> repository, 
-    IDialogService dialogService, INavigationService navigationService) : BaseViewModel
+    IDialogService dialogService) : BaseViewModel
 {
     [ObservableProperty]
     private Transaction transaction = new();

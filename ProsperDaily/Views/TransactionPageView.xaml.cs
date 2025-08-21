@@ -12,5 +12,6 @@ public partial class TransactionPageView : ContentPage
         viewModel.Owner = this; 
         this.viewModel = viewModel;
         BindingContext = viewModel;
+        viewModel.Owner = this;
     }
 }
