@@ -1,4 +1,7 @@
-﻿namespace ProsperDaily.Shared.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Drawing;
+
+namespace ProsperDaily.Shared.Entities;
 
 public class Transaction : Entity
 {
@@ -6,4 +9,9 @@ public class Transaction : Entity
     public decimal Amount { get; set; }
     public bool IsIncome { get; set; }
     public DateTime TransactionDate { get; set; } = DateTime.Now;
+
+    [NotMapped]
+    public string AmountText => $"{(IsIncome ? "+ " : "- ")}{Amount:C}";
+    [NotMapped]
+    public string AmountColor => IsIncome ? Color.DarkGreen.ToHex() : Color.DarkRed.ToHex();
 }

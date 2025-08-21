@@ -11,6 +11,7 @@ public partial class DashboardPageView : ContentPage
 		InitializeComponent();
         this.viewModel = viewModel;
         BindingContext = viewModel;
+        viewModel.Owner = this;
     }
 
     protected override async void OnAppearing()
