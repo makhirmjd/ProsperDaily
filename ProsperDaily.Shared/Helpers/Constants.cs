@@ -1,4 +1,5 @@
 ﻿using ProsperDaily.Shared.Entities;
+using System.Drawing;
 using System.Reflection;
 
 namespace ProsperDaily.Shared.Helpers;
@@ -46,4 +47,9 @@ public static class Constants
     public static List<U> MapLite<T, U>(List<T> srcs) where U : class, new() => [.. srcs.Select(s => MapLite(s, new U { }))];
 
     public static List<T> MapLite<T>(List<T> srcs) where T : class, new() => [.. srcs.Select(s => MapLite(s, new T { }))];
+
+    // Colors
+    public static string ToHex(this Color color, bool includeAlpha = true) => includeAlpha ?
+        $"#{color.A:X2}{color.R:X2}{color.G:X2}{color.B:X2}" :
+        $"#{color.R:X2}{color.G:X2}{color.B:X2}";
 }
