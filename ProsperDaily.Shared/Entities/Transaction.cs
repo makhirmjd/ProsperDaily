@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Humanizer;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
 
 namespace ProsperDaily.Shared.Entities;
@@ -14,4 +15,6 @@ public class Transaction : Entity
     public string AmountText => $"{(IsIncome ? "+ " : "- ")}{Amount:C}";
     [NotMapped]
     public string AmountColor => IsIncome ? Color.DarkGreen.ToHex() : Color.DarkRed.ToHex();
+    [NotMapped]
+    public string TransactionDateString => TransactionDate.Humanize();
 }
